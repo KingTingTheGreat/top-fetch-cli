@@ -9,7 +9,7 @@ import (
 	"github.com/kingtingthegreat/top-fetch-cli/config"
 )
 
-func UrlToAnsi(url string, config config.Config) (string, error) {
+func UrlToAnsi(config config.Config, url string) (string, error) {
 	resp, err := http.Get(url)
 	if err != nil {
 		return "", fmt.Errorf("failed to get image from url")

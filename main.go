@@ -31,7 +31,7 @@ func main() {
 		trackText, imageUrl = local.LocalFetch(cfg)
 	}
 	// log.Println("converting")
-	ansiImage, err := convert.UrlToAnsi(imageUrl, cfg)
+	ansiImage, err := convert.UrlToAnsi(cfg, imageUrl)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
