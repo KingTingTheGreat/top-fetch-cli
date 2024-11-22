@@ -6,7 +6,7 @@ import (
 	"github.com/kingtingthegreat/top-fetch-cli/config"
 	"github.com/kingtingthegreat/top-fetch-cli/convert"
 	"github.com/kingtingthegreat/top-fetch-cli/env"
-	"github.com/kingtingthegreat/top-fetch-cli/local"
+	"github.com/kingtingthegreat/top-fetch-cli/fetch"
 	"github.com/kingtingthegreat/top-fetch-cli/output"
 )
 
@@ -22,13 +22,13 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
-	var trackText, imageUrl string
+	var imageUrl, trackText string
 
 	if cfg.Web {
 		log.Println("ID", cfg.TopFetchId)
 		return
 	} else {
-		trackText, imageUrl = local.LocalFetch(cfg)
+		imageUrl, trackText = fetch.LocalFetch(cfg)
 	}
 	// log.Println("converting")
 	ansiImage, err := convert.UrlToAnsi(cfg, imageUrl)

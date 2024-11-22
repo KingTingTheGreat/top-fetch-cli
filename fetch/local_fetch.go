@@ -1,4 +1,4 @@
-package local
+package fetch
 
 import (
 	"fmt"
@@ -32,6 +32,5 @@ func LocalFetch(cfg config.Config) (string, string) {
 		go env.SaveEnv(cfg.SpotifyClientId, cfg.SpotifyClientSecret, newAccessToken, cfg.SpotifyRefreshToken)
 	}
 
-	return track.Name + " - " + track.Artists[0].Name, track.Album.Images[0].Url
-
+	return track.Album.Images[0].Url, track.Name + " - " + track.Artists[0].Name
 }
