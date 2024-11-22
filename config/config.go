@@ -23,6 +23,7 @@ type Config struct {
 	File                string
 	Wrap                bool
 	Timeout             int
+	Silent              bool
 }
 
 const (
@@ -33,6 +34,7 @@ const (
 	PATH    = "path="
 	FILE    = "file="
 	TIMEOUT = "timeout="
+	SILENT  = "silent"
 )
 
 const PADDING = "padding="
@@ -90,6 +92,8 @@ func ParseArgs() (Config, error) {
 						return Config{}, fmt.Errorf("invalid timeout")
 					}
 					config.Timeout = newTimeout
+				case SILENT:
+					config.Silent = true
 				}
 
 			}

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"log"
 	"time"
 
 	"github.com/kingtingthegreat/top-fetch-cli/config"
 	"github.com/kingtingthegreat/top-fetch-cli/convert"
 	"github.com/kingtingthegreat/top-fetch-cli/env"
+	"github.com/kingtingthegreat/top-fetch-cli/fatal"
 	"github.com/kingtingthegreat/top-fetch-cli/fetch"
 	"github.com/kingtingthegreat/top-fetch-cli/output"
 )
@@ -22,7 +22,7 @@ func fetchAndDisplay(cfg config.Config) {
 	// log.Println("converting")
 	ansiImage, err := convert.UrlToAnsi(cfg, imageUrl)
 	if err != nil {
-		log.Fatal(err.Error())
+		fatal.Fatal(cfg.Silent, err.Error())
 	}
 
 	output.Output(cfg, ansiImage, trackText)
@@ -33,7 +33,7 @@ func main() {
 	env.LoadEnv()
 	cfg, err := config.ParseArgs()
 	if err != nil {
-		log.Fatal(err.Error())
+		fatal.Fatal(cfg.Silent, err.Error())
 	}
 
 	if cfg.Timeout < 0 {
@@ -49,6 +49,6 @@ func main() {
 				continue
 			}
 		}
-		log.Fatal("Exceed the ", cfg.Timeout, " millisecond time limit")
+		fatal.Fatal(cfg.Silent, "Exceed the ", cfg.Timeout, " millisecond time limit")
 	}
 }
