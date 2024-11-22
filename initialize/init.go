@@ -25,7 +25,12 @@ func InitSpotify(cfg config.Config) (string, string, error) {
 			}
 
 			var err error
-			accessToken, refreshToken, err = spotify.ExchangeCode(cfg.SpotifyClientId, cfg.SpotifyClientSecret, "http://localhost:8080", code)
+			accessToken, refreshToken, err = spotify.ExchangeCode(
+				cfg.SpotifyClientId,
+				cfg.SpotifyClientSecret,
+				"http://localhost:8080",
+				code,
+			)
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
 				w.Write([]byte("something went wrong. please try again."))
