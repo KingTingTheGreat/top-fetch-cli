@@ -22,19 +22,23 @@ type Config struct {
 	Path                string
 	File                string
 	Wrap                bool
+	Timeout             int
 }
 
-const WEB = "web"
-const DIM = "dim="
-const CHAR = "char="
-const RATIO = "ratio="
-const PATH = "path="
-const FILE = "file="
+const (
+	WEB     = "web"
+	DIM     = "dim="
+	CHAR    = "char="
+	RATIO   = "ratio="
+	PATH    = "path="
+	FILE    = "file="
+	TIMEOUT = "timeout="
+)
 
 const PADDING = "padding="
 const WRAP = "wrap"
 
-var OPTS = []string{WEB, DIM, CHAR, RATIO, PATH, FILE}
+var OPTS = []string{WEB, DIM, CHAR, RATIO, PATH, FILE, TIMEOUT}
 
 func ParseArgs() (Config, error) {
 	config := Config{
@@ -50,6 +54,7 @@ func ParseArgs() (Config, error) {
 		Path:                "source",
 		File:                "",
 		Wrap:                false,
+		Timeout:             -1,
 	}
 
 	for _, arg := range os.Args[1:] {
@@ -79,6 +84,12 @@ func ParseArgs() (Config, error) {
 					config.FontRatio = newRatio
 				case FILE:
 					config.File = val
+				case TIMEOUT:
+					newTimeout, err := strconv.Atoi(val)
+					if err != nil {
+						return Config{}, fmt.Errorf("invalid timeout")
+					}
+					config.Timeout = newTimeout
 				}
 
 			}

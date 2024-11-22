@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"github.com/kingtingthegreat/top-fetch-cli/config"
 	"github.com/kingtingthegreat/top-fetch-cli/convert"
@@ -10,18 +11,7 @@ import (
 	"github.com/kingtingthegreat/top-fetch-cli/output"
 )
 
-type Result struct {
-	Image string
-	Err   error
-}
-
-func main() {
-	env.LoadEnv()
-	cfg, err := config.ParseArgs()
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-
+func fetchAndDisplay(cfg config.Config) {
 	var imageUrl, trackText string
 
 	if cfg.Web {
@@ -36,4 +26,29 @@ func main() {
 	}
 
 	output.Output(cfg, ansiImage, trackText)
+}
+
+func main() {
+	start := time.Now()
+	env.LoadEnv()
+	cfg, err := config.ParseArgs()
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	if cfg.Timeout < 0 {
+		fetchAndDisplay(cfg)
+	} else {
+		c := make(chan bool)
+		go func() { fetchAndDisplay(cfg); c <- true }()
+		for time.Now().Before(start.Add(time.Duration(cfg.Timeout) * time.Millisecond)) {
+			select {
+			case <-c:
+				return
+			default:
+				continue
+			}
+		}
+		log.Fatal("Exceed the ", cfg.Timeout, " millisecond time limit")
+	}
 }
