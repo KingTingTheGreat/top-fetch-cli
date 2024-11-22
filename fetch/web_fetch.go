@@ -14,7 +14,7 @@ func WebFetch(cfg config.Config) (string, string) {
 		log.Fatal("TopFetch id is not set")
 	}
 
-	res, err := http.Get("https://top-fetch.vercel.app/track?id=%s" + cfg.TopFetchId)
+	res, err := http.Get("https://top-fetch.vercel.app/track?id=" + cfg.TopFetchId)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
