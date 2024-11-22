@@ -18,14 +18,15 @@ func centerTrackText(trackText string, dim int) string {
 	return strings.Repeat(" ", leftPad) + trackText + strings.Repeat(" ", rightPad)
 }
 
-func Output(cfg config.Config, ansiImage, trackText string) {
+func Output(ansiImage, trackText string) {
+	cfg := config.Config()
 	trackText = centerTrackText(trackText, int(cfg.Dim))
 
 	// write to desired output
 	if cfg.File != "" {
-		outputFile, err := WriteToFile(cfg, ansiImage, trackText)
+		outputFile, err := WriteToFile(ansiImage, trackText)
 		if err != nil {
-			fatal.Fatal(cfg.Silent, err.Error())
+			fatal.Fatal(err.Error())
 		}
 		os.Stdout.WriteString(outputFile)
 	} else {

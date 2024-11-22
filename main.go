@@ -11,36 +11,38 @@ import (
 	"github.com/kingtingthegreat/top-fetch-cli/output"
 )
 
-func fetchAndDisplay(cfg config.Config) {
+func fetchAndDisplay(web bool) {
 	var imageUrl, trackText string
 
-	if cfg.Web {
-		imageUrl, trackText = fetch.WebFetch(cfg)
+	if web {
+		imageUrl, trackText = fetch.WebFetch()
 	} else {
-		imageUrl, trackText = fetch.LocalFetch(cfg)
+		imageUrl, trackText = fetch.LocalFetch()
 	}
 	// log.Println("converting")
-	ansiImage, err := convert.UrlToAnsi(cfg, imageUrl)
+	ansiImage, err := convert.UrlToAnsi(imageUrl)
 	if err != nil {
-		fatal.Fatal(cfg.Silent, err.Error())
+		fatal.Fatal(err.Error())
 	}
 
-	output.Output(cfg, ansiImage, trackText)
+	output.Output(ansiImage, trackText)
 }
 
 func main() {
 	start := time.Now()
 	env.LoadEnv()
-	cfg, err := config.ParseArgs()
+	err := config.ParseArgs()
 	if err != nil {
-		fatal.Fatal(cfg.Silent, err.Error())
+		fatal.Fatal(err.Error())
 	}
 
+	cfg := config.Config()
+
 	if cfg.Timeout < 0 {
-		fetchAndDisplay(cfg)
+		fetchAndDisplay(cfg.Web)
 	} else {
 		c := make(chan bool)
-		go func() { fetchAndDisplay(cfg); c <- true }()
+		go func() { fetchAndDisplay(cfg.Web); c <- true }()
 		for time.Now().Before(start.Add(time.Duration(cfg.Timeout) * time.Millisecond)) {
 			select {
 			case <-c:
@@ -49,6 +51,6 @@ func main() {
 				continue
 			}
 		}
-		fatal.Fatal(cfg.Silent, "Exceed the ", cfg.Timeout, " millisecond time limit")
+		fatal.Fatal("Exceed the ", cfg.Timeout, " millisecond time limit")
 	}
 }

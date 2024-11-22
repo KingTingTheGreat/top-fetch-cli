@@ -9,7 +9,7 @@ import (
 	"github.com/kingtingthegreat/top-fetch-cli/config"
 )
 
-func UrlToAnsi(config config.Config, url string) (string, error) {
+func UrlToAnsi(url string) (string, error) {
 	resp, err := http.Get(url)
 	if err != nil {
 		return "", fmt.Errorf("failed to get image from url")
@@ -21,5 +21,7 @@ func UrlToAnsi(config config.Config, url string) (string, error) {
 		return "", fmt.Errorf("cannot decode image from response")
 	}
 
-	return converter.Convert(img, config.Dim, config.Char, config.FontRatio), nil
+	cfg := config.Config()
+
+	return converter.Convert(img, cfg.Dim, cfg.Char, cfg.FontRatio), nil
 }

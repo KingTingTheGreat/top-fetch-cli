@@ -9,7 +9,8 @@ import (
 	"github.com/kingtingthegreat/top-fetch-cli/env"
 )
 
-func WriteToFile(cfg config.Config, ansiImage, trackText string) (string, error) {
+func WriteToFile(ansiImage, trackText string) (string, error) {
+	cfg := config.Config()
 	outputFile := cfg.File
 	if cfg.Path == "relative" {
 		basePath, err := env.GetBasePath()

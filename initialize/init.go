@@ -6,11 +6,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/kingtingthegreat/top-fetch-cli/config"
 	"github.com/kingtingthegreat/top-fetch/spotify"
 )
 
-func InitSpotify(cfg config.Config) (string, string, error) {
+func InitSpotify(clientId, clientSecret string) (string, string, error) {
 	var accessToken, refreshToken string
 	stop := make(chan bool, 1)
 
@@ -26,8 +25,8 @@ func InitSpotify(cfg config.Config) (string, string, error) {
 
 			var err error
 			accessToken, refreshToken, err = spotify.ExchangeCode(
-				cfg.SpotifyClientId,
-				cfg.SpotifyClientSecret,
+				clientId,
+				clientSecret,
 				"http://localhost:8080",
 				code,
 			)

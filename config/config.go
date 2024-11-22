@@ -9,7 +9,7 @@ import (
 	"github.com/kingtingthegreat/ansi-converter/defaults"
 )
 
-type Config struct {
+type config struct {
 	Web                 bool
 	TopFetchId          string
 	SpotifyClientId     string
@@ -42,63 +42,69 @@ const WRAP = "wrap"
 
 var OPTS = []string{WEB, DIM, CHAR, RATIO, PATH, FILE, TIMEOUT}
 
-func ParseArgs() (Config, error) {
-	config := Config{
-		Web:                 false,
-		TopFetchId:          os.Getenv("TOP_FETCH_ID"),
-		SpotifyClientId:     os.Getenv("SPOTIFY_CLIENT_ID"),
-		SpotifyClientSecret: os.Getenv("SPOTIFY_CLIENT_SECRET"),
-		SpotifyAccessToken:  os.Getenv("SPOTIFY_ACCESS_TOKEN"),
-		SpotifyRefreshToken: os.Getenv("SPOTIFY_REFRESH_TOKEN"),
-		Dim:                 defaults.DEFAULT_DIM,
-		Char:                defaults.DEFAULT_CHAR,
-		FontRatio:           defaults.DEFAULT_RATIO,
-		Path:                "source",
-		File:                "",
-		Wrap:                false,
-		Timeout:             -1,
-	}
+var cfg config = config{
+	Web:       false,
+	Dim:       defaults.DEFAULT_DIM,
+	Char:      defaults.DEFAULT_CHAR,
+	FontRatio: defaults.DEFAULT_RATIO,
+	Path:      "source",
+	File:      "",
+	Wrap:      false,
+	Timeout:   -1,
+}
 
+func ParseArgs() error {
+	// configure args
 	for _, arg := range os.Args[1:] {
 		for _, opt := range OPTS {
 			if strings.HasPrefix(arg, opt) {
 				val := strings.TrimLeft(arg, opt)
 				switch opt {
 				case WEB:
-					config.Web = true
+					cfg.Web = true
 					if strings.HasPrefix(val, "=") {
 						val = strings.TrimLeft(val, "=")
-						config.TopFetchId = val
+						cfg.TopFetchId = val
 					}
 				case DIM:
 					newDim, err := strconv.ParseFloat(val, 64)
 					if err != nil {
-						return Config{}, fmt.Errorf("invalid dim")
+						return fmt.Errorf("invalid dim")
 					}
-					config.Dim = newDim
+					cfg.Dim = newDim
 				case CHAR:
-					config.Char = val
+					cfg.Char = val
 				case RATIO:
 					newRatio, err := strconv.ParseFloat(val, 64)
 					if err != nil {
-						return Config{}, fmt.Errorf("invalid ratio")
+						return fmt.Errorf("invalid ratio")
 					}
-					config.FontRatio = newRatio
+					cfg.FontRatio = newRatio
 				case FILE:
-					config.File = val
+					cfg.File = val
 				case TIMEOUT:
 					newTimeout, err := strconv.Atoi(val)
 					if err != nil {
-						return Config{}, fmt.Errorf("invalid timeout")
+						return fmt.Errorf("invalid timeout")
 					}
-					config.Timeout = newTimeout
+					cfg.Timeout = newTimeout
 				case SILENT:
-					config.Silent = true
+					cfg.Silent = true
 				}
 
 			}
 		}
 	}
 
-	return config, nil
+	cfg.TopFetchId = os.Getenv("TOP_FETCH_ID")
+	cfg.SpotifyClientId = os.Getenv("SPOTIFY_CLIENT_ID")
+	cfg.SpotifyClientSecret = os.Getenv("SPOTIFY_CLIENT_SECRET")
+	cfg.SpotifyAccessToken = os.Getenv("SPOTIFY_ACCESS_TOKEN")
+	cfg.SpotifyRefreshToken = os.Getenv("SPOTIFY_REFRESH_TOKEN")
+
+	return nil
+}
+
+func Config() *config {
+	return &cfg
 }
