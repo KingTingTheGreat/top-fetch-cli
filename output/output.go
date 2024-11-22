@@ -11,7 +11,7 @@ func Output(cfg config.Config, ansiImage, trackText string) {
 
 	// write to desired output
 	if cfg.File != "" {
-		outputFile, err := WriteToFile(ansiImage, trackText, cfg)
+		outputFile, err := WriteToFile(cfg, ansiImage, trackText)
 		if err != nil {
 			log.Fatal(err.Error())
 		}

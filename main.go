@@ -25,8 +25,7 @@ func main() {
 	var imageUrl, trackText string
 
 	if cfg.Web {
-		log.Println("ID", cfg.TopFetchId)
-		return
+		imageUrl, trackText = fetch.WebFetch(cfg)
 	} else {
 		imageUrl, trackText = fetch.LocalFetch(cfg)
 	}
