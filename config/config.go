@@ -53,7 +53,6 @@ func ParseArgs() (Config, error) {
 	}
 
 	for _, arg := range os.Args[1:] {
-		arg = strings.ToLower(arg)
 		for _, opt := range OPTS {
 			if strings.HasPrefix(arg, opt) {
 				val := strings.TrimLeft(arg, opt)
