@@ -23,5 +23,5 @@ func UrlToAnsi(url string) (string, error) {
 
 	cfg := config.Config()
 
-	return converter.Convert(img, cfg.Dim, cfg.Char, cfg.FontRatio), nil
+	return converter.Convert(img, cfg.Char, cfg.Dim, cfg.FontRatio, cfg.PaddingTop, cfg.PaddingRight, cfg.PaddingBottom, cfg.PaddingLeft), nil
 }

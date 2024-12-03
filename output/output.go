@@ -8,19 +8,20 @@ import (
 	"github.com/kingtingthegreat/top-fetch-cli/fatal"
 )
 
-func centerTrackText(trackText string, dim int) string {
+func centerTrackText(trackText string, dim int, paddingLeft, paddingRight int) string {
 	if len(trackText) > dim {
 		return trackText
 	}
 
-	leftPad := (dim - len(trackText)) / 2
-	rightPad := dim - len(trackText) - leftPad
+	width := dim + paddingRight + paddingLeft
+	leftPad := (width - len(trackText)) / 2
+	rightPad := width - len(trackText) - leftPad
 	return strings.Repeat(" ", leftPad) + trackText + strings.Repeat(" ", rightPad)
 }
 
 func Output(ansiImage, trackText string) {
 	cfg := config.Config()
-	trackText = centerTrackText(trackText, int(cfg.Dim))
+	trackText = centerTrackText(trackText, int(cfg.Dim), cfg.PaddingLeft, cfg.PaddingRight)
 
 	// write to desired output
 	if cfg.File != "" {
@@ -30,6 +31,6 @@ func Output(ansiImage, trackText string) {
 		}
 		os.Stdout.WriteString(outputFile)
 	} else {
-		os.Stdout.WriteString(ansiImage + trackText)
+		os.Stdout.WriteString(ansiImage + "\n" + trackText)
 	}
 }

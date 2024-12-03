@@ -10,6 +10,12 @@ github.com/kingtingthegreat/ansi-converter v0.1.0 h1:g6hvmd8coV23tRCcUaEm8zTHh+6
 github.com/kingtingthegreat/ansi-converter v0.1.0/go.mod h1:ZnYQaQK+5neuWUzeHOsTPq9rfqFMmMK3VhyK6dh9w9Q=
 github.com/kingtingthegreat/ansi-converter v0.1.1-0.20241201012242-a637290d502f h1:IKvO5cEBjAAnPzkMzNjdTM/mYlxoDJdaHSMuem8pmgo=
 github.com/kingtingthegreat/ansi-converter v0.1.1-0.20241201012242-a637290d502f/go.mod h1:ZnYQaQK+5neuWUzeHOsTPq9rfqFMmMK3VhyK6dh9w9Q=
+github.com/kingtingthegreat/ansi-converter v0.1.1-0.20241201013004-d109c02e8f49 h1:XS9sfa0dfHezk+PhpZVVkyPNmqhHJNb/lL9Be+VVmSc=
+github.com/kingtingthegreat/ansi-converter v0.1.1-0.20241201013004-d109c02e8f49/go.mod h1:ZnYQaQK+5neuWUzeHOsTPq9rfqFMmMK3VhyK6dh9w9Q=
+github.com/kingtingthegreat/ansi-converter v0.1.1-0.20241201013534-5958b60d5874 h1:cOzvr98ZEjtFqIVQx3kDmibjBvSh5O7PQVLKyD7Kn0E=
+github.com/kingtingthegreat/ansi-converter v0.1.1-0.20241201013534-5958b60d5874/go.mod h1:ZnYQaQK+5neuWUzeHOsTPq9rfqFMmMK3VhyK6dh9w9Q=
+github.com/kingtingthegreat/ansi-converter v0.1.1-0.20241201013703-6fb42fc8c33d h1:dWo6Ld7mxXonmpT8UiBPhLuEcoVgjxbXm1OJ5i/tSuY=
+github.com/kingtingthegreat/ansi-converter v0.1.1-0.20241201013703-6fb42fc8c33d/go.mod h1:ZnYQaQK+5neuWUzeHOsTPq9rfqFMmMK3VhyK6dh9w9Q=
 github.com/kingtingthegreat/top-fetch v0.0.0-20241006012734-fb61a7c25ded h1:KqWukQtzJtcfSoN+f45ao3BilILDroaeFhO2hffqa0k=
 github.com/kingtingthegreat/top-fetch v0.0.0-20241006012734-fb61a7c25ded/go.mod h1:y30PsMj09W59u3YXzZOYidVa4UV6gvmk5JZHW53uQDY=
 github.com/kingtingthegreat/top-fetch v0.0.0-20241006020225-a29e8ae58e0d h1:A3mBarkQbty5EwfX9nYI7c1ZOcz+8+61qpckd6tmDQk=

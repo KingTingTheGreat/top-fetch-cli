@@ -8,7 +8,7 @@ require (
 	github.com/a-h/templ v0.2.778 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
-	github.com/kingtingthegreat/ansi-converter v0.1.1-0.20241201012242-a637290d502f // indirect
+	github.com/kingtingthegreat/ansi-converter v0.1.1-0.20241201013703-6fb42fc8c33d // indirect
 	github.com/klauspost/compress v1.17.10 // indirect
 	github.com/montanaflynn/stats v0.7.1 // indirect
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 // indirect
