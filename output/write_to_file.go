@@ -9,7 +9,7 @@ import (
 	"github.com/kingtingthegreat/top-fetch-cli/env"
 )
 
-func WriteToFile(ansiImage, trackText string) (string, error) {
+func WriteToFile(outputString string) (string, error) {
 	cfg := config.Config()
 	outputFile := cfg.File
 	if cfg.Path == "relative" {
@@ -26,7 +26,7 @@ func WriteToFile(ansiImage, trackText string) (string, error) {
 	}
 	defer file.Close()
 
-	_, err = file.WriteString(ansiImage + "\n" + trackText + "\n\n")
+	_, err = file.WriteString(outputString)
 	if err != nil {
 		return "", fmt.Errorf("could not write to output file")
 	}
