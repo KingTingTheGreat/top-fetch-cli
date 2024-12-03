@@ -28,6 +28,10 @@ type config struct {
 	PaddingRight        int
 	PaddingBottom       int
 	PaddingLeft         int
+	MarginTop           int
+	MarginRight         int
+	MarginBottom        int
+	MarginLeft          int
 }
 
 const (
@@ -44,6 +48,11 @@ const (
 	PADDING_RIGHT  = "pR"
 	PADDING_BOTTOM = "pB"
 	PADDING_LEFT   = "pL"
+	MARGIN         = "m"
+	MARGIN_TOP     = "mT"
+	MARGIN_RIGHT   = "mR"
+	MARGIN_BOTTOM  = "mB"
+	MARGIN_LEFT    = "mL"
 )
 
 const WRAP = "wrap"
@@ -61,6 +70,10 @@ var cfg config = config{
 	PaddingRight:  0,
 	PaddingBottom: 0,
 	PaddingLeft:   0,
+	MarginTop:     0,
+	MarginRight:   0,
+	MarginBottom:  0,
+	MarginLeft:    0,
 }
 
 func ParseArgs() error {
@@ -135,6 +148,39 @@ func ParseArgs() error {
 				return fmt.Errorf("invalid padding left")
 			}
 			cfg.PaddingLeft = newPaddingLeft
+		case MARGIN:
+			newMargin, err := strconv.Atoi(val)
+			if err != nil {
+				return fmt.Errorf("invalid margin")
+			}
+			cfg.MarginTop = newMargin
+			cfg.MarginRight = newMargin
+			cfg.MarginBottom = newMargin
+			cfg.MarginLeft = newMargin
+		case MARGIN_TOP:
+			newMarginTop, err := strconv.Atoi(val)
+			if err != nil {
+				return fmt.Errorf("invalid margin top")
+			}
+			cfg.MarginTop = newMarginTop
+		case MARGIN_RIGHT:
+			newMarginRight, err := strconv.Atoi(val)
+			if err != nil {
+				return fmt.Errorf("invalid margin right")
+			}
+			cfg.MarginRight = newMarginRight
+		case MARGIN_BOTTOM:
+			newMarginBottom, err := strconv.Atoi(val)
+			if err != nil {
+				return fmt.Errorf("invalid margin bottom")
+			}
+			cfg.MarginBottom = newMarginBottom
+		case MARGIN_LEFT:
+			newMarginLeft, err := strconv.Atoi(val)
+			if err != nil {
+				return fmt.Errorf("invalid margin left")
+			}
+			cfg.MarginLeft = newMarginLeft
 		}
 	}
 
