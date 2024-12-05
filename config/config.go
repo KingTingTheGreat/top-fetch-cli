@@ -184,7 +184,9 @@ func ParseArgs() error {
 		}
 	}
 
-	cfg.TopFetchId = os.Getenv("TOP_FETCH_ID")
+	if cfg.TopFetchId == "" {
+		cfg.TopFetchId = os.Getenv("TOP_FETCH_ID")
+	}
 	cfg.SpotifyClientId = os.Getenv("SPOTIFY_CLIENT_ID")
 	cfg.SpotifyClientSecret = os.Getenv("SPOTIFY_CLIENT_SECRET")
 	cfg.SpotifyAccessToken = os.Getenv("SPOTIFY_ACCESS_TOKEN")
