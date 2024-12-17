@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	converter_config "github.com/kingtingthegreat/ansi-converter/config"
 	"github.com/kingtingthegreat/ansi-converter/defaults"
 )
 
@@ -16,22 +17,16 @@ type config struct {
 	SpotifyClientSecret string
 	SpotifyAccessToken  string
 	SpotifyRefreshToken string
-	Dim                 float64
-	Char                string
-	FontRatio           float64
 	Path                string
 	File                string
 	Wrap                bool
 	Timeout             int
 	Silent              bool
-	PaddingTop          int
-	PaddingRight        int
-	PaddingBottom       int
-	PaddingLeft         int
 	MarginTop           int
 	MarginRight         int
 	MarginBottom        int
 	MarginLeft          int
+	ConverterConfig     converter_config.Config
 }
 
 const (
@@ -58,22 +53,24 @@ const (
 const WRAP = "wrap"
 
 var cfg config = config{
-	Web:           false,
-	Dim:           defaults.DEFAULT_DIM,
-	Char:          defaults.DEFAULT_CHAR,
-	FontRatio:     defaults.DEFAULT_RATIO,
-	Path:          "source",
-	File:          "",
-	Wrap:          false,
-	Timeout:       -1,
-	PaddingTop:    0,
-	PaddingRight:  0,
-	PaddingBottom: 0,
-	PaddingLeft:   0,
-	MarginTop:     0,
-	MarginRight:   0,
-	MarginBottom:  0,
-	MarginLeft:    0,
+	Web:          false,
+	Path:         "source",
+	File:         "",
+	Wrap:         false,
+	Timeout:      -1,
+	MarginTop:    0,
+	MarginRight:  0,
+	MarginBottom: 0,
+	MarginLeft:   0,
+	ConverterConfig: converter_config.Config{
+		Dim:           defaults.DEFAULT_DIM,
+		Char:          defaults.DEFAULT_CHAR,
+		FontRatio:     defaults.DEFAULT_RATIO,
+		PaddingTop:    0,
+		PaddingRight:  0,
+		PaddingBottom: 0,
+		PaddingLeft:   0,
+	},
 }
 
 func ParseArgs() error {
@@ -96,15 +93,15 @@ func ParseArgs() error {
 			if err != nil {
 				return fmt.Errorf("invalid dim")
 			}
-			cfg.Dim = newDim
+			cfg.ConverterConfig.Dim = newDim
 		case CHAR:
-			cfg.Char = val
+			cfg.ConverterConfig.Char = val
 		case RATIO:
 			newRatio, err := strconv.ParseFloat(val, 64)
 			if err != nil {
 				return fmt.Errorf("invalid ratio")
 			}
-			cfg.FontRatio = newRatio
+			cfg.ConverterConfig.FontRatio = newRatio
 		case FILE:
 			cfg.File = val
 		case TIMEOUT:
@@ -120,34 +117,34 @@ func ParseArgs() error {
 			if err != nil {
 				return fmt.Errorf("invalid padding")
 			}
-			cfg.PaddingTop = newPadding
-			cfg.PaddingRight = newPadding
-			cfg.PaddingBottom = newPadding
-			cfg.PaddingLeft = newPadding
+			cfg.ConverterConfig.PaddingTop = newPadding
+			cfg.ConverterConfig.PaddingRight = newPadding
+			cfg.ConverterConfig.PaddingBottom = newPadding
+			cfg.ConverterConfig.PaddingLeft = newPadding
 		case PADDING_TOP:
 			newPaddingTop, err := strconv.Atoi(val)
 			if err != nil {
 				return fmt.Errorf("invalid padding top")
 			}
-			cfg.PaddingTop = newPaddingTop
+			cfg.ConverterConfig.PaddingTop = newPaddingTop
 		case PADDING_RIGHT:
 			newPaddingRight, err := strconv.Atoi(val)
 			if err != nil {
 				return fmt.Errorf("invalid padding right")
 			}
-			cfg.PaddingRight = newPaddingRight
+			cfg.ConverterConfig.PaddingRight = newPaddingRight
 		case PADDING_BOTTOM:
 			newPaddingBottom, err := strconv.Atoi(val)
 			if err != nil {
 				return fmt.Errorf("invalid padding bottom")
 			}
-			cfg.PaddingBottom = newPaddingBottom
+			cfg.ConverterConfig.PaddingBottom = newPaddingBottom
 		case PADDING_LEFT:
 			newPaddingLeft, err := strconv.Atoi(val)
 			if err != nil {
 				return fmt.Errorf("invalid padding left")
 			}
-			cfg.PaddingLeft = newPaddingLeft
+			cfg.ConverterConfig.PaddingLeft = newPaddingLeft
 		case MARGIN:
 			newMargin, err := strconv.Atoi(val)
 			if err != nil {
@@ -183,6 +180,8 @@ func ParseArgs() error {
 			cfg.MarginLeft = newMarginLeft
 		}
 	}
+	cfg.ConverterConfig.PaddingRight += cfg.MarginRight
+	cfg.ConverterConfig.PaddingLeft += cfg.MarginLeft
 
 	if cfg.TopFetchId == "" {
 		cfg.TopFetchId = os.Getenv("TOP_FETCH_ID")

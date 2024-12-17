@@ -21,10 +21,10 @@ func centerTrackText(trackText string, dim int, left, right int) string {
 
 func Output(ansiImage, trackText string) {
 	cfg := config.Config()
-	trackText = centerTrackText(trackText, int(cfg.Dim),
-		cfg.PaddingLeft+cfg.MarginLeft, cfg.PaddingRight+cfg.MarginRight)
+	trackText = centerTrackText(trackText, int(cfg.ConverterConfig.Dim),
+		cfg.ConverterConfig.PaddingLeft, cfg.ConverterConfig.PaddingRight)
 
-	outputString := ansiImage + "\n" + trackText + "\n" + strings.Repeat("\n", cfg.MarginBottom)
+	outputString := strings.Repeat("\n", cfg.MarginTop) + ansiImage + "\n" + trackText + "\n" + strings.Repeat("\n", cfg.MarginBottom)
 
 	// write to desired output
 	if cfg.File != "" {
